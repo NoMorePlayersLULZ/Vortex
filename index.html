@@ -9,7 +9,6 @@
 <body class="dark-theme">
     <div class="app-container">
         
-        <!-- Сайдбар с навигацией (ПК: слева, Мобилки: снизу) -->
         <nav class="sidebar">
             <div class="sidebar-top">
                 <button class="nav-btn active" data-screen="screen-chat" title="Чаты">💬</button>
@@ -20,14 +19,11 @@
             </div>
         </nav>
 
-        <!-- Главная область контента -->
         <main class="main-content">
             
-            <!-- Экран чатов (Telegram-стиль со списком чатов) -->
             <section id="screen-chat" class="screen active">
                 <div class="messenger-layout">
-                    <!-- Панель списка чатов слева -->
-                    <div class="chats-sidebar-panel">
+                    <div class="chats-sidebar-panel" id="chats-sidebar">
                         <div class="chats-search-box">
                             <input type="text" placeholder="Поиск чатов..." id="chat-search">
                         </div>
@@ -60,10 +56,13 @@
                         </div>
                     </div>
 
-                    <!-- Область самого чата справа -->
-                    <div class="chat-room-area">
+                    <div class="chat-room-area" id="chat-room">
+                        <div class="chat-header-mobile">
+                            <button id="back-to-chats-btn" class="back-btn">← Назад</button>
+                            <span id="current-chat-title">Vortex Bot</span>
+                        </div>
                         <div id="chat-box">
-                            <div class="message"><b>Vortex Bot:</b> Добро пожаловать в Vortex! Выбирай чат слева и общайся.</div>
+                            <div class="message"><b>Vortex Bot:</b> Добро пожаловать в Vortex! Выбирай чат и общайся.</div>
                         </div>
                         <div class="input-group">
                             <input type="text" id="message-input" placeholder="Написать сообщение...">
@@ -73,13 +72,11 @@
                 </div>
             </section>
 
-            <!-- Экран поиска -->
             <section id="screen-search" class="screen">
                 <h2>Глобальный поиск</h2>
                 <input type="text" placeholder="Введите запрос для поиска...">
             </section>
 
-            <!-- Экран настроек -->
             <section id="screen-settings" class="screen">
                 <h2>Настройки</h2>
                 <div class="settings-group">
@@ -89,7 +86,7 @@
                         <option value="light-theme">Светлая</option>
                     </select>
                 </div>
-                <div class="version-tag">Vortex Messenger v1.2.0</div>
+                <div class="version-tag">Vortex Messenger v1.2.1</div>
             </section>
 
         </main>

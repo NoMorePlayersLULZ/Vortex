@@ -4,14 +4,11 @@ const screens = document.querySelectorAll('.screen');
 
 navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Убираем активный класс у кнопок
         navButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Получаем ID нужного экрана
         const screenId = btn.getAttribute('data-screen');
 
-        // Переключаем экраны
         screens.forEach(screen => {
             if (screen.id === screenId) {
                 screen.classList.add('active');
@@ -22,7 +19,7 @@ navButtons.forEach(btn => {
     });
 });
 
-// Логика смены темы через настройки
+// Смена темы
 const themeSelect = document.getElementById('theme-select');
 if (themeSelect) {
     themeSelect.addEventListener('change', (e) => {
@@ -30,19 +27,37 @@ if (themeSelect) {
     });
 }
 
-// Логика кликов по списку чатов (Telegram-стиль)
+// Логика переключения чатов (и адаптив для мобилок)
 const chatItems = document.querySelectorAll('.chat-item');
+const messengerLayout = document.querySelector('.messenger-layout');
+const backToChatsBtn = document.getElementById('back-to-chats-btn');
+const currentChatTitle = document.getElementById('current-chat-title');
+
 chatItems.forEach(item => {
     item.addEventListener('click', () => {
         chatItems.forEach(el => el.classList.remove('active'));
         item.classList.add('active');
         
-        const chatId = item.getAttribute('data-chat');
-        console.log('Переключено на чат:', chatId);
+        const chatName = item.querySelector('.chat-name').textContent;
+        if (currentChatTitle) {
+            currentChatTitle.textContent = chatName;
+        }
+
+        // На мобилках активируем класс, чтобы скрыть список и показать чат
+        if (messengerLayout) {
+            messengerLayout.classList.add('chat-active');
+        }
     });
 });
 
-// Отправка сообщений в чате
+// Кнопка «Назад» на мобилках
+if (backToChatsBtn && messengerLayout) {
+    backToChatsBtn.addEventListener('click', () => {
+        messengerLayout.classList.remove('chat-active');
+    });
+}
+
+// Отправка сообщений
 const sendBtn = document.getElementById('send-btn');
 const messageInput = document.getElementById('message-input');
 const chatBox = document.getElementById('chat-box');
