@@ -36,7 +36,6 @@ body.dark-theme {
     --msg-bg: #2d2d2d;
 }
 
-/* Растягиваем главный контейнер на весь экран */
 .app-container {
     width: 100vw;
     height: 100vh;
@@ -45,7 +44,7 @@ body.dark-theme {
     overflow: hidden;
 }
 
-/* Сайдбар с кнопками навигации (ПК: слева) */
+/* Сайдбар навигации (ПК: слева) */
 .sidebar {
     width: 75px;
     background: var(--sidebar-bg);
@@ -56,6 +55,7 @@ body.dark-theme {
     padding: 20px 0;
     border-right: 1px solid var(--border-color);
     flex-shrink: 0;
+    z-index: 10;
 }
 
 .sidebar-top, .sidebar-bottom {
@@ -85,28 +85,31 @@ body.dark-theme {
     color: #38bdf8;
 }
 
-/* Основная область контента */
+/* Главная область контента */
 .main-content {
     flex: 1;
     display: flex;
-    flex-direction: column;
     position: relative;
     height: 100%;
     overflow: hidden;
 }
 
+/* Экраны (скрыты по умолчанию, активный показывается через flex) */
 .screen {
     display: none;
-    flex-direction: column;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--bg-color);
 }
 
 .screen.active {
     display: flex;
 }
 
-/* Стили для экрана чатов ( Telegram-макет ) */
+/* Макет мессенджера (Список чатов + Окно переписки в ряд) */
 .messenger-layout {
     display: flex;
     width: 100%;
@@ -255,9 +258,9 @@ input {
     flex: 1;
 }
 
-#screen-search {
+/* Другие экраны (Поиск, Настройки) */
+#screen-search, #screen-settings {
     padding: 30px;
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
@@ -290,11 +293,6 @@ button.action-btn:hover {
     word-break: break-all;
 }
 
-/* Экран настроек */
-#screen-settings {
-    padding: 30px;
-}
-
 .settings-group {
     margin-bottom: 20px;
     display: flex;
@@ -310,7 +308,6 @@ button.action-btn:hover {
     padding-bottom: 10px;
 }
 
-/* Автоматическое затемнение логотипа в светлой теме */
 body.light-theme img[src*="logo"] {
     filter: brightness(0.2) contrast(1.2);
 }
@@ -355,10 +352,5 @@ body.light-theme img[src*="logo"] {
     .main-content {
         flex: 1;
         height: calc(100% - 65px);
-    }
-
-    /* На мобилке скрываем список чатов, оставляя экран переписки (или можно переключать) */
-    .chats-sidebar-panel {
-        width: 100%;
     }
 }
