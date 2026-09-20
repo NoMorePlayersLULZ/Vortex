@@ -36,7 +36,7 @@ body.dark-theme {
     --msg-bg: #2d2d2d;
 }
 
-/* Растягиваем главный контейнер на весь экран без всяких рамок */
+/* Растягиваем главный контейнер на весь экран */
 .app-container {
     width: 100vw;
     height: 100vh;
@@ -45,7 +45,7 @@ body.dark-theme {
     overflow: hidden;
 }
 
-/* Сайдбар (боковая панель для ПК) */
+/* Сайдбар с кнопками навигации (ПК: слева) */
 .sidebar {
     width: 75px;
     background: var(--sidebar-bg);
@@ -55,6 +55,7 @@ body.dark-theme {
     justify-content: space-between;
     padding: 20px 0;
     border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .sidebar-top, .sidebar-bottom {
@@ -91,20 +92,141 @@ body.dark-theme {
     flex-direction: column;
     position: relative;
     height: 100%;
+    overflow: hidden;
 }
 
 .screen {
     display: none;
     flex-direction: column;
     height: 100%;
-    padding: 30px;
+    width: 100%;
 }
 
 .screen.active {
     display: flex;
 }
 
-/* Экран чата */
+/* Стили для экрана чатов ( Telegram-макет ) */
+.messenger-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.chats-sidebar-panel {
+    width: 320px;
+    height: 100%;
+    border-right: 1px solid var(--border-color);
+    background: var(--panel-bg);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.chats-search-box {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chats-search-box input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.chats-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.chat-item:hover {
+    background: rgba(14, 99, 156, 0.1);
+}
+
+.chat-item.active {
+    background: rgba(14, 99, 156, 0.25);
+}
+
+.chat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--input-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.chat-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-title-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.chat-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.chat-time {
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+.chat-preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-text {
+    font-size: 13px;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.unread-badge {
+    background: #0e639c;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* Область переписки справа */
+.chat-room-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    background: var(--bg-color);
+}
+
 #chat-box {
     flex: 1;
     border: 1px solid var(--border-color);
@@ -112,7 +234,7 @@ body.dark-theme {
     padding: 20px;
     overflow-y: auto;
     margin-bottom: 15px;
-    background: var(--bg-color);
+    background: var(--panel-bg);
 }
 
 .input-group {
@@ -133,8 +255,8 @@ input {
     flex: 1;
 }
 
-/* Исправляем экран поиска, чтобы инпут не превращался в гиганта */
 #screen-search {
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -169,6 +291,10 @@ button.action-btn:hover {
 }
 
 /* Экран настроек */
+#screen-settings {
+    padding: 30px;
+}
+
 .settings-group {
     margin-bottom: 20px;
     display: flex;
@@ -184,13 +310,13 @@ button.action-btn:hover {
     padding-bottom: 10px;
 }
 
-/* Делаем логотип видимым в светлой теме */
+/* Автоматическое затемнение логотипа в светлой теме */
 body.light-theme img[src*="logo"] {
     filter: brightness(0.2) contrast(1.2);
 }
 
 /* ==========================================
-   МОБИЛЬНАЯ АДАПТИВНОСТЬ (Сайдбар снизу)
+   МОБИЛЬНАЯ АДАПТИВНОСТЬ (< 768px)
    ================================---------- */
 @media (max-width: 768px) {
     body, html {
@@ -231,7 +357,8 @@ body.light-theme img[src*="logo"] {
         height: calc(100% - 65px);
     }
 
-    .screen {
-        padding: 15px;
+    /* На мобилке скрываем список чатов, оставляя экран переписки (или можно переключать) */
+    .chats-sidebar-panel {
+        width: 100%;
     }
 }

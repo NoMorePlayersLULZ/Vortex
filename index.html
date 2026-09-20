@@ -3,138 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vortex — Alpha 0.2.4</title>
+    <title>Vortex Messenger</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Подключаем наш логотип для вкладки браузера -->
-    <link rel="icon" type="image/png" href="logo.png">
 </head>
 <body class="dark-theme">
-
     <div class="app-container">
-        <!-- Боковая панель (сайдбар) -->
-        <div class="sidebar">
+        
+        <!-- Сайдбар с навигацией (ПК: слева, Мобилки: снизу) -->
+        <nav class="sidebar">
             <div class="sidebar-top">
-                <button class="nav-btn active" data-target="screen-chats" title="Чаты">💬</button>
-                <button class="nav-btn" data-target="screen-search" title="Поиск">🔍</button>
+                <button class="nav-btn active" data-screen="screen-chat" title="Чаты">💬</button>
+                <button class="nav-btn" data-screen="screen-search" title="Поиск">🔍</button>
             </div>
             <div class="sidebar-bottom">
-                <button class="nav-btn" data-target="screen-settings" title="Настройки">⚙️</button>
+                <button class="nav-btn" data-screen="screen-settings" title="Настройки">⚙️</button>
             </div>
-        </div>
+        </nav>
 
-        <!-- Основная область контента -->
-        <div class="main-content">
+        <!-- Главная область контента -->
+        <main class="main-content">
+            
+            <!-- Экран чатов (Telegram-стиль со списком чатов) -->
+            <section id="screen-chat" class="screen active">
+                <div class="messenger-layout">
+                    <!-- Панель списка чатов слева -->
+                    <div class="chats-sidebar-panel">
+                        <div class="chats-search-box">
+                            <input type="text" placeholder="Поиск чатов..." id="chat-search">
+                        </div>
+                        <div class="chats-list">
+                            <div class="chat-item active" data-chat="vortex-bot">
+                                <div class="chat-avatar">🤖</div>
+                                <div class="chat-details">
+                                    <div class="chat-title-row">
+                                        <span class="chat-name">Vortex Bot</span>
+                                        <span class="chat-time">14:50</span>
+                                    </div>
+                                    <div class="chat-preview-row">
+                                        <span class="chat-text">Привет! Мобильная вёрстка огонь 🔥</span>
+                                        <span class="unread-badge">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-item" data-chat="dev-group">
+                                <div class="chat-avatar">💬</div>
+                                <div class="chat-details">
+                                    <div class="chat-title-row">
+                                        <span class="chat-name">Разработчики</span>
+                                        <span class="chat-time">Вчера</span>
+                                    </div>
+                                    <div class="chat-preview-row">
+                                        <span class="chat-text">Запушили изменения в GitHub</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- 1. Экран чатов (Избранное) -->
-            <div id="screen-chats" class="screen active">
-                <h3 style="margin-bottom: 10px; display: flex; align-items: center;">
-                    <img src="logo.png" alt="Vortex Logo" style="width: 24px; height: 24px; margin-right: 8px; object-fit: contain;">
-                    Избранное — Vortex
-                </h3>
-                <div id="chat-box"></div>
-                <div class="input-group">
-                    <input type="text" id="message-input" placeholder="Написать в избранное...">
-                    <button id="send-btn" class="action-btn">Отправить</button>
+                    <!-- Область самого чата справа -->
+                    <div class="chat-room-area">
+                        <div id="chat-box">
+                            <div class="message"><b>Vortex Bot:</b> Добро пожаловать в Vortex! Выбирай чат слева и общайся.</div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="message-input" placeholder="Написать сообщение...">
+                            <button class="action-btn" id="send-btn">Отправить</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- 2. Экран поиска -->
-            <div id="screen-search" class="screen">
-                <h3 style="margin-bottom: 10px;">🔍 Поиск по чатам</h3>
-                <input type="text" id="search-input" placeholder="Введите для поиска...">
-                <p style="opacity: 0.6; margin-top: 15px;">Поиск в Vortex пока отдыхает, но скоро заработает!</p>
-            </div>
+            <!-- Экран поиска -->
+            <section id="screen-search" class="screen">
+                <h2>Глобальный поиск</h2>
+                <input type="text" placeholder="Введите запрос для поиска...">
+            </section>
 
-            <!-- 3. Экран настроек -->
-            <div id="screen-settings" class="screen">
-                <h3 style="margin-bottom: 15px;">⚙️ Настройки Vortex</h3>
-                
+            <!-- Экран настроек -->
+            <section id="screen-settings" class="screen">
+                <h2>Настройки</h2>
                 <div class="settings-group">
-                    <label>Ваш юзернейм:</label>
-                    <input type="text" id="username-input" placeholder="Введите имя...">
-                </div>
-
-                <div class="settings-group">
-                    <label>Тема оформления:</label>
+                    <label for="theme-select">Тема оформления:</label>
                     <select id="theme-select">
-                        <option value="dark-theme">Темная</option>
+                        <option value="dark-theme">Темная (по умолчанию)</option>
                         <option value="light-theme">Светлая</option>
                     </select>
                 </div>
+                <div class="version-tag">Vortex Messenger v1.2.0</div>
+            </section>
 
-                <div class="version-tag">Vortex Alpha 0.2.4</div>
-            </div>
-
-        </div>
+        </main>
     </div>
 
-    <!-- Логика приложения -->
-    <script>
-        // Переключение экранов по кнопкам сайдбара
-        const navButtons = document.querySelectorAll('.nav-btn');
-        const screens = document.querySelectorAll('.screen');
-
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                navButtons.forEach(b => b.classList.remove('active'));
-                screens.forEach(s => s.classList.remove('active'));
-
-                btn.classList.add('active');
-                const targetScreen = document.getElementById(btn.dataset.target);
-                targetScreen.classList.add('active');
-            });
-        });
-
-        // Сохранение и загрузка настроек (localStorage)
-        const usernameInput = document.getElementById('username-input');
-        const themeSelect = document.getElementById('theme-select');
-        const chatBox = document.getElementById('chat-box');
-        const messageInput = document.getElementById('message-input');
-        const sendBtn = document.getElementById('send-btn');
-
-        // Загрузка сохраненных данных
-        const savedUser = localStorage.getItem('chat_username');
-        if (savedUser) usernameInput.value = savedUser;
-
-        const savedTheme = localStorage.getItem('chat_theme') || 'dark-theme';
-        document.body.className = savedTheme;
-        themeSelect.value = savedTheme;
-
-        // Сохранение юзернейма на лету
-        usernameInput.addEventListener('input', () => {
-            localStorage.setItem('chat_username', usernameInput.value.trim());
-        });
-
-        // Переключение темы
-        themeSelect.addEventListener('change', () => {
-            const selectedTheme = themeSelect.value;
-            document.body.className = selectedTheme;
-            localStorage.setItem('chat_theme', selectedTheme);
-        });
-
-        // Функция отправки сообщения
-        function sendMessage() {
-            const text = messageInput.value.trim();
-            const user = usernameInput.value.trim() || 'Аноним';
-            if (text) {
-                const msgDiv = document.createElement('div');
-                msgDiv.classList.add('message');
-                msgDiv.textContent = `${user}: ${text}`;
-                chatBox.appendChild(msgDiv);
-                chatBox.scrollTop = chatBox.scrollHeight;
-                messageInput.value = '';
-            }
-        }
-
-        // Отправка по клику на кнопку
-        sendBtn.addEventListener('click', sendMessage);
-
-        // Отправка по нажатию Enter в поле ввода сообщения
-        messageInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    </script>
+    <script src="server.js"></script>
 </body>
 </html>
