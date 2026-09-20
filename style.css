@@ -137,15 +137,15 @@ input {
 #screen-search {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Прижимаем элементы к левому краю */
+    align-items: flex-start;
     gap: 15px;
 }
 
 #screen-search input {
     width: 100%;
     max-width: 350px;
-    height: 42px; /* Жестко фиксируем нормальную высоту строки */
-    flex: none;   /* Запрещаем ему растягиваться на весь экран */
+    height: 42px;
+    flex: none;
 }
 
 button.action-btn {
@@ -184,6 +184,11 @@ button.action-btn:hover {
     padding-bottom: 10px;
 }
 
+/* Делаем логотип видимым в светлой теме */
+body.light-theme img[src*="logo"] {
+    filter: brightness(0.2) contrast(1.2);
+}
+
 /* ==========================================
    МОБИЛЬНАЯ АДАПТИВНОСТЬ (Сайдбар снизу)
    ================================---------- */
@@ -193,7 +198,7 @@ button.action-btn:hover {
     }
 
     .app-container {
-        flex-direction: column-reverse; /* Контент сверху, нижняя панель снизу */
+        flex-direction: column-reverse;
         height: 100vh;
         height: 100dvh;
     }
