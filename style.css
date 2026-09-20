@@ -1,0 +1,232 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: var(--bg-color, #1e1e1e);
+    color: var(--text-color, #fff);
+    overflow: hidden;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Светлая тема */
+body.light-theme {
+    --bg-color: #f0f2f5;
+    --panel-bg: #ffffff;
+    --sidebar-bg: #f8f9fa;
+    --text-color: #000;
+    --border-color: #dcdcdc;
+    --input-bg: #f0f2f5;
+    --msg-bg: #e4e6eb;
+}
+
+/* Темная тема (по умолчанию) */
+body.dark-theme {
+    --bg-color: #0e0e0e;
+    --panel-bg: #18191a;
+    --sidebar-bg: #242526;
+    --text-color: #fff;
+    --border-color: #333;
+    --input-bg: #3a3b3c;
+    --msg-bg: #2d2d2d;
+}
+
+/* Растягиваем главный контейнер на весь экран без всяких рамок */
+.app-container {
+    width: 100vw;
+    height: 100vh;
+    background: var(--panel-bg);
+    display: flex;
+    overflow: hidden;
+}
+
+/* Сайдбар (боковая панель для ПК) */
+.sidebar {
+    width: 75px;
+    background: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-top, .sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: rgba(14, 99, 156, 0.3);
+    color: #38bdf8;
+}
+
+/* Основная область контента */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    padding: 30px;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Экран чата */
+#chat-box {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    background: var(--bg-color);
+}
+
+.input-group {
+    display: flex;
+    gap: 12px;
+}
+
+input, select, button {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+input {
+    flex: 1;
+}
+
+/* Исправляем экран поиска, чтобы инпут не превращался в гиганта */
+#screen-search {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Прижимаем элементы к левому краю */
+    gap: 15px;
+}
+
+#screen-search input {
+    width: 100%;
+    max-width: 350px;
+    height: 42px; /* Жестко фиксируем нормальную высоту строки */
+    flex: none;   /* Запрещаем ему растягиваться на весь экран */
+}
+
+button.action-btn {
+    background: #0e639c;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+button.action-btn:hover {
+    background: #1177bb;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    background: var(--msg-bg);
+    border-radius: 8px;
+    word-break: break-all;
+}
+
+/* Экран настроек */
+.settings-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+}
+
+.version-tag {
+    margin-top: auto;
+    font-size: 13px;
+    opacity: 0.5;
+    padding-bottom: 10px;
+}
+
+/* ==========================================
+   МОБИЛЬНАЯ АДАПТИВНОСТЬ (Сайдбар снизу)
+   ================================---------- */
+@media (max-width: 768px) {
+    body, html {
+        overflow: auto;
+    }
+
+    .app-container {
+        flex-direction: column-reverse; /* Контент сверху, нижняя панель снизу */
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 65px;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0;
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+        background: var(--sidebar-bg);
+        flex-shrink: 0;
+    }
+
+    .sidebar-top, .sidebar-bottom {
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .version-tag {
+        display: none;
+    }
+
+    .main-content {
+        flex: 1;
+        height: calc(100% - 65px);
+    }
+
+    .screen {
+        padding: 15px;
+    }
+}
